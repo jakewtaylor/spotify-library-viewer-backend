@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EntryController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/get-started', 'get-started')->name('get-started');
+Route::view('/', 'home');
+Route::get('/spotify-auth-result', [EntryController::class, 'spotifyAuthResult']);
+
+Auth::routes();
