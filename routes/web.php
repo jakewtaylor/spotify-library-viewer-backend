@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/get-started', 'get-started')->name('get-started');
-Route::view('/', 'home');
-Route::get('/spotify-auth-result', [EntryController::class, 'spotifyAuthResult']);
-
 Auth::routes();
+
+Route::view('/get-started', 'get-started')->name('get-started');
+Route::get('/spotify-auth-result', [EntryController::class, 'spotifyAuthResult']);
+Route::get('/{path?}', [EntryController::class, 'homepageController'])->where('path', '.*')->name('home');

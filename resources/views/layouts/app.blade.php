@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     {{-- <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> --}}
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="/resources/react-app/src/app.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-900 h-screen antialiased leading-none">

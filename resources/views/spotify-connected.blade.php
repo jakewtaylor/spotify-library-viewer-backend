@@ -16,9 +16,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    const accessTokens = @json($accessTokens);
-
-</script>
 @endsection

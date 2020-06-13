@@ -19,7 +19,8 @@ class Spotify
             'client_id' => $this->config['client_id'],
             'response_type' => 'code',
             'redirect_uri' => $this->getRedirectUri(),
-            'scopes' => implode('+', $this->config['scopes']),
+            'scope' => implode('+', $this->config['scopes']),
+            'show_dialog' => true,
         ]);
     }
 

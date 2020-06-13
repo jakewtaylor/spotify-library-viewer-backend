@@ -11,10 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.postCss('resources/css/app.css', 'public/css', [
-  require('tailwindcss'),
-])
-
-if (mix.inProduction()) {
-  mix.version();
-}
+mix
+  .postCss('resources/css/app.css', 'resources/react-app/public/app.css', [
+    require('tailwindcss'),
+  ])
+  .setPublicPath('resources/react-app/public');

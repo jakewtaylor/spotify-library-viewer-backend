@@ -12,6 +12,9 @@ class EncryptCookies extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'accessToken',
+        'tokenType',
+        'expiresIn',
+        'refreshToken',
     ];
 }

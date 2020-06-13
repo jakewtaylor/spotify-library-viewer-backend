@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<p>test</p>
+
+@auth
+<div id="app"></div>
+@else
+<p>login or register</p>
+@endauth
 @endsection
