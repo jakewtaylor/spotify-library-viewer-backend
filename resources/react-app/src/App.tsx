@@ -1,25 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { RecoilRoot, RecoilRootProps } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { SpotifyGate } from './components/auth/spotify/SpotifyGate';
 import { Search } from './pages/Search/Search';
-import * as atoms from './recoil/atoms';
 
-const initializeState: RecoilRootProps['initializeState'] = ({ set }) => {
-  const atomsArr = Object.values(atoms);
+// const initializeState: RecoilRootProps['initializeState'] = ({ set }) => {
+//   const atomsArr = Object.values(atoms);
 
-  atomsArr.forEach(atom => {
-    const val = localStorage.getItem(atom.key);
+//   atomsArr.forEach(atom => {
+//     console.log(atom);
+//     const val = localStorage.getItem(atom.key);
 
-    if (val) {
-      set(atom, JSON.parse(val).value);
-    }
-  });
-};
+//     if (val) {
+//       set(atom, JSON.parse(val).value);
+//     }
+//   });
+// };
 
 export const App: React.FC = () => {
   return (
-    <RecoilRoot initializeState={initializeState}>
+    <RecoilRoot /*initializeState={initializeState}*/>
       <Router>
         <SpotifyGate>
           <Route exact path="/">

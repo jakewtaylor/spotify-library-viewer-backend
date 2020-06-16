@@ -12,4 +12,5 @@ return [
     ],
     'auth_url' => env('SPOTIFY_AUTH_URL', 'https://accounts.spotify.com/authorize'),
     'api_token_url' => env('SPOTIFY_API_TOKEN_URL', 'https://accounts.spotify.com/api/token'),
+    'api_token_refresh_url' => env('SPOTIFY_API_TOKEN_REFRESH_URL', 'https://accounts.spotify.com/api/token'),
 ];

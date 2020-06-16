@@ -1,29 +1,78 @@
 import axios, { AxiosInstance } from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { stringify } from 'querystring';
 import { SearchResponse } from '../types/spotify/SearchResponse';
 
-export class SpotifyService {
-  protected instance: AxiosInstance;
-  protected accessToken: string | null = null;
+const accessTokenKey = 'access_token';
+const refreshTokenKey = 'refresh_token';
 
-  public constructor(accessToken: string) {
-    this.accessToken = accessToken;
+class SpotifyService {
+  protected instance: AxiosInstance;
+
+  protected _accessToken: string = localStorage.getItem(accessTokenKey) || '';
+  protected _refreshToken: string = localStorage.getItem(refreshTokenKey) || '';
+
+  protected get accessToken() {
+    return this._accessToken;
+  }
+  protected set accessToken(val: string) {
+    localStorage.setItem(accessTokenKey, val);
+    this._accessToken = val;
+  }
+
+  protected get refreshToken() {
+    return this._refreshToken;
+  }
+  protected set refreshToken(val: string) {
+    localStorage.setItem(refreshTokenKey, val);
+    this._refreshToken = val;
+  }
+
+  constructor() {
     this.instance = this.buildInstance();
   }
 
   protected buildInstance() {
-    return axios.create({
+    const instance = axios.create({
       baseURL: 'https://api.spotify.com/v1',
       paramsSerializer: params => stringify(params),
-      headers: {
-        Authorization: `Bearer ${this.accessToken || ''}`,
-      },
     });
+
+    createAuthRefreshInterceptor(instance, err => this.handleRefresh(err));
+
+    instance.interceptors.request.use(req => {
+      if (this.accessToken) {
+        req.headers['Authorization'] = `Bearer ${this.accessToken}`;
+      }
+
+      return req;
+    });
+
+    return instance;
   }
 
-  public setAccessToken(token: string) {
-    this.accessToken = token;
-    this.instance = this.buildInstance();
+  protected async handleRefresh(err: any) {
+    return axios
+      .post('http://spotify-api-viewer.test/api/spotify/refresh-token', {
+        refresh_token: this.refreshToken,
+      })
+      .then(res => {
+        console.log('refreshed:', res);
+
+        this.accessToken = res.data.access_token;
+      })
+      .catch(err => {
+        console.log('refresh failed!!', { err });
+      });
+  }
+
+  public needsTokens() {
+    return !this.accessToken;
+  }
+
+  public setTokens(accessToken: string, refreshToken: string) {
+    this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
   }
 
   public search(term: string) {
@@ -36,3 +85,5 @@ export class SpotifyService {
     });
   }
 }
+
+export const spotify = new SpotifyService();

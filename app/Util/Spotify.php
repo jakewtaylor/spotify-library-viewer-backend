@@ -50,4 +50,17 @@ class Spotify
             ])
             ->json();
     }
+
+    public function refreshToken(string $refreshToken)
+    {
+        return Http::asForm()
+            ->withHeaders([
+                'Authorization' => $this->getAuthHeader(),
+            ])
+            ->post($this->config['api_token_refresh_url'], [
+                'grant_type' => 'refresh_token',
+                'refresh_token' => $refreshToken,
+            ])
+            ->json();
+    }
 }
