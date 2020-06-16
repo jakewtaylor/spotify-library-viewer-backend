@@ -52,10 +52,18 @@ class SpotifyService {
   }
 
   protected async handleRefresh(err: any) {
+    await axios.get('http://spotify-viewer-api.test/sanctum/csrf-cookie', {
+      withCredentials: true,
+    });
+
     return axios
-      .post('http://spotify-api-viewer.test/api/spotify/refresh-token', {
-        refresh_token: this.refreshToken,
-      })
+      .post(
+        'http://spotify-viewer-api.test/api/spotify/refresh-token',
+        {
+          refresh_token: this.refreshToken,
+        },
+        { withCredentials: true },
+      )
       .then(res => {
         console.log('refreshed:', res);
 

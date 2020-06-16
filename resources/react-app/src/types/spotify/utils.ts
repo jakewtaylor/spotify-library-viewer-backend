@@ -22,5 +22,5 @@ export type Paginated<T> = {
   next: string | null;
   offset: number;
   previous: string | null;
-  total: 4;
+  total: number;
 };
