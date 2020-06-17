@@ -1,8 +1,7 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Artists } from './components/Artists';
-import { AlbumResults } from './components/AlbumResults';
+import { Albums } from './components/Albums';
 import { SearchBox } from './components/SearchBox';
-import { WaitForInput } from './components/WaitForInput';
 import { useRecoilValue } from 'recoil';
 import { searchTerm } from '../../recoil/atoms';
 
@@ -17,9 +16,7 @@ export const Search: React.FC = () => {
         <>
           <Artists />
 
-          <Suspense fallback={<p>loading...</p>}>
-            <AlbumResults />
-          </Suspense>
+          <Albums />
         </>
       ) : (
         <div className="p-4 text-center">

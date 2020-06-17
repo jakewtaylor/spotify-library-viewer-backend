@@ -38,7 +38,7 @@ class SpotifyService {
       paramsSerializer: params => stringify(params),
     });
 
-    createAuthRefreshInterceptor(instance, err => this.handleRefresh(err));
+    createAuthRefreshInterceptor(instance, () => this.handleRefresh());
 
     instance.interceptors.request.use(req => {
       if (this.accessToken) {
@@ -51,7 +51,7 @@ class SpotifyService {
     return instance;
   }
 
-  protected async handleRefresh(err: any) {
+  protected async handleRefresh() {
     await axios.get('http://spotify-viewer-api.test/sanctum/csrf-cookie', {
       withCredentials: true,
     });
@@ -65,12 +65,10 @@ class SpotifyService {
         { withCredentials: true },
       )
       .then(res => {
-        console.log('refreshed:', res);
-
         this.accessToken = res.data.access_token;
       })
-      .catch(err => {
-        console.log('refresh failed!!', { err });
+      .catch(() => {
+        // Whoops...
       });
   }
 

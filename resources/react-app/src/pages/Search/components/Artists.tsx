@@ -10,7 +10,7 @@ export const Artists: React.FC = () => {
       </h5>
 
       <div className="flex flex-row w-full overflow-scroll">
-        <Suspense fallback={ArtistListSkeleton}>
+        <Suspense fallback={<ArtistListSkeleton />}>
           <ArtistList />
         </Suspense>
       </div>

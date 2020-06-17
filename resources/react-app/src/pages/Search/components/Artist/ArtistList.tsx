@@ -18,6 +18,7 @@ export const ArtistList: React.FC = () => {
               <img
                 src={artist.images[0].url}
                 className="object-cover w-full h-full"
+                alt={artist.name}
               />
             </PictureContainer>
           ) : (

@@ -1,6 +1,5 @@
 import { atom, selector } from 'recoil';
 import { spotify } from '../services/SpotifyService';
-import { WaitForInput } from '../pages/Search/components/WaitForInput';
 
 export const searchTerm = atom({
   key: 'searchTerm',
@@ -11,12 +10,6 @@ export const searchResults = selector({
   key: 'searchResults',
   get: async ({ get }) => {
     const query = get(searchTerm);
-
-    console.log({ query });
-
-    if (!query) {
-      throw WaitForInput.flag.description;
-    }
 
     const res = await spotify.search(query);
 

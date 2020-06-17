@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AlbumController;
 use App\Http\Controllers\Api\SpotifyTokenController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/spotify/refresh-token', [SpotifyTokenController::class, 'refresh']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::resource('albums', 'Api\\AlbumController', [
+        'except' => ['show', 'create', 'edit', 'update'],
+    ]);
+});
